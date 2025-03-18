@@ -1,140 +1,128 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+import 'package:flutter/services.dart';
 
-  @override
-  _SignUpScreenState createState() => _SignUpScreenState();
-}
 
-class _SignUpScreenState extends State<SignUpScreen> {
-  bool _isPasswordVisible = false;
-  bool _isConfirmPasswordVisible = false;
-
+class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              "Create an Account",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 20),
-            const TextField(
-              decoration: InputDecoration(
-                labelText: "Username or Email",
-                prefixIcon: Icon(Icons.person),
-                border: OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              obscureText: !_isPasswordVisible,
-              decoration: InputDecoration(
-                labelText: "Password",
-                prefixIcon: const Icon(Icons.lock),
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _isPasswordVisible = !_isPasswordVisible;
-                    });
-                  },
-                ),
-                border: const OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              obscureText: !_isConfirmPasswordVisible,
-              decoration: InputDecoration(
-                labelText: "Confirm Password",
-                prefixIcon: const Icon(Icons.lock),
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    _isConfirmPasswordVisible
-                        ? Icons.visibility
-                        : Icons.visibility_off,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _isConfirmPasswordVisible = !_isConfirmPasswordVisible;
-                    });
-                  },
-                ),
-                border: const OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 10),
-            const Text(
-              "By clicking the Register button, you agree to the public offer",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 12, color: Colors.grey),
-            ),
-            const SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.cyan,
-                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-              ),
-              child: const Text(
-                "Create Account",
-                style: TextStyle(fontSize: 16, color: Colors.white),
-              ),
-            ),
-            const SizedBox(height: 20),
-            const Text("- OR Continue with -"),
-            const SizedBox(height: 10),
-            const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SocialButton(icon: FontAwesomeIcons.google, color: Colors.red),
-                    SizedBox(width: 15),
-                    SocialButton(icon: FontAwesomeIcons.apple, color: Colors.black),
-                    SizedBox(width: 15),
-                    SocialButton(icon: FontAwesomeIcons.facebook, color: Colors.blue),
+      backgroundColor: Color(0xFFD7F5FF),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Create an\naccount",
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  fontFamily: 'SF Pro',
+                  shadows: [
+                    Shadow(
+                      offset: Offset(2, 2),
+                      blurRadius: 6,
+                      color: Colors.black26,
+                    )
                   ],
                 ),
-            const SizedBox(height: 20),
-            GestureDetector(
-              onTap: () {},
-              child: const Text(
-                "I Already Have an Account Login",
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue,
+              ),
+              SizedBox(height: 20),
+              CustomTextField(hintText: "Prenom"),
+              CustomTextField(hintText: "Nom"),
+              CustomTextField(hintText: "Username or Email"),
+              CustomTextField(hintText: "Password", isPassword: true),
+              CustomTextField(hintText: "Confirm Password", isPassword: true),
+              SizedBox(height: 10),
+              Text(
+                "By clicking the Register button, you agree to the public offer",
+                style: TextStyle(fontSize: 12, color: Colors.black54),
+              ),
+              SizedBox(height: 20),
+              Container(
+                width: double.infinity,
+                height: 50,
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(30),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black45,
+                      blurRadius: 12,
+                      spreadRadius: 2,
+                      offset: Offset(2, 5),
+                    ),
+                  ],
+                ),
+                child: Center(
+                  child: Text(
+                    "Create Account",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontFamily: 'SF Pro',
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ],
+              SizedBox(height: 10),
+              Center(
+                child: Text.rich(
+                  TextSpan(
+                    text: "Already have an account? ",
+                    style: TextStyle(fontSize: 14, color: Colors.black54),
+                    children: [
+                      TextSpan(
+                        text: "Login Now",
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
- class SocialButton extends StatelessWidget {
-  final IconData icon;
-  final Color color;
 
-  const SocialButton({super.key, required this.icon, required this.color});
+class CustomTextField extends StatelessWidget {
+  final String hintText;
+  final bool isPassword;
+  CustomTextField({required this.hintText, this.isPassword = false});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(color: Colors.grey),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: TextField(
+        obscureText: isPassword,
+        decoration: InputDecoration(
+          hintText: hintText,
+          prefixIcon: Icon(
+            isPassword ? Icons.lock_outline : Icons.person_outline,
+            color: Colors.grey,
+          ),
+          filled: true,
+          fillColor: Colors.white,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide.none,
+          ),
+          contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+         
+          
+        ),
       ),
-      child: Icon(icon, color: color),
     );
   }
 }

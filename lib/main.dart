@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'pages/homepage.dart';
+import 'pages/welcome.dart';
 import 'pages/signupscreen.dart';
 import 'pages/forgetpassword.dart';
 import 'pages/pass1.dart';
-import 'pages/acceuil.dart';
+import 'pages/login.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 void main() {
   runApp(const MyApp());
@@ -21,11 +21,11 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           initialRoute: '/',
           routes: {
-            '/': (context) => const LoginPage(),
-            '/signupscreen': (context) => SignUpScreen(),
-            '/forgotpassword': (context) => ForgotPasswordPage(),
-            '/pass1': (context) => OnboardingScreen(),
-            '/acceuil': (context) => AcceuilPage(),
+            '/': (context) => OnboardingScreen(),
+            '/welcome' : (context) => WelcomeScreen(),
+            '/signupscreen': (context) => RegisterScreen(),
+            '/forgotpassword': (context) => ForgotPasswordScreen(),
+            '/login': (context) => LoginPage(),
           },
         );
       },

@@ -1,101 +1,166 @@
 import 'package:flutter/material.dart';
+import 'welcome.dart'; // Import the WelcomeScreen
 
 void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: OnboardingScreen(),
-  ));
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Car Onboarding',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        fontFamily: 'Roboto',
+      ),
+      home: const OnboardingScreen(),
+    );
+  }
 }
 
 class OnboardingScreen extends StatefulWidget {
+  const OnboardingScreen({super.key});
+
   @override
   _OnboardingScreenState createState() => _OnboardingScreenState();
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
-  PageController _pageController = PageController();
+  final PageController _pageController = PageController();
   int _currentPage = 0;
 
-  List<Map<String, String>> onboardingData = [
+  final List<Map<String, String>> _onboardingData = [
     {
-      "image": "assets/pass1.png",
-      "title": "Choose a Car",
-      "description": "Explore and find the perfect car for you! Browse detailed listings, compare prices, and make the best decision.",
+      "title": "Choose a car",
+      "description": "Explore and find the perfect car for you! Drawer detailed displays, compare results, and make informed decisions with ease.",
+      "image": "assets/image11.png",
     },
     {
-      "image": "assets/pass2.png",
-      "title": "Contact Seller",
-      "description": "Easily connect with sellers to ask questions, negotiate prices, and finalize your car purchase.",
+      "title": "Contact seller",
+      "description": "Easily contact sellers to ask questions, negotiate prices, and finalize your car purchase. Get instant replies and make informed decisions before buying your next vehicle.",
+      "image": "assets/image22.png",
     },
     {
-      "image": "assets/pass3.png",
-      "title": "Make a Deal",
-      "description": "Secure the best deal and drive away with confidence. Enjoy a seamless car-buying experience!",
-    }
+      "title": "Get Your Car",
+      "description": "Complete your purchase and drive away with your dream car. Secure transactions and a smooth process make buying easier than ever!",
+      "image": "assets/image33.png",
+    },
   ];
 
-  void nextPage() {
-    if (_currentPage < 2) {
+  void _nextPage() {
+    if (_currentPage < _onboardingData.length - 1) {
       _pageController.nextPage(
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
-    } else {
-      // Redirect to home screen when onboarding is finished
-      Navigator.pushReplacementNamed(context, '/acceuil');
-      print("Onboarding terminé !");
     }
+  }
+
+  void _prevPage() {
+    if (_currentPage > 0) {
+      _pageController.previousPage(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  void _goToWelcome() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => WelcomeScreen()),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: Stack(
         children: [
-          Expanded(
-            child: PageView.builder(
-              controller: _pageController,
-              itemCount: onboardingData.length,
-              onPageChanged: (index) {
-                setState(() {
-                  _currentPage = index;
-                });
-              },
-              itemBuilder: (context, index) => OnboardingPage(
-                image: onboardingData[index]["image"]!,
-                title: onboardingData[index]["title"]!,
-                description: onboardingData[index]["description"]!,
+          PageView.builder(
+            controller: _pageController,
+            itemCount: _onboardingData.length,
+            onPageChanged: (int page) => setState(() => _currentPage = page),
+            itemBuilder: (context, index) {
+              return OnboardingPage(
+                title: _onboardingData[index]["title"]!,
+                description: _onboardingData[index]["description"]!,
+                image: _onboardingData[index]["image"]!,
+              );
+            },
+          ),
+
+          // Skip Button
+          Positioned(
+            top: MediaQuery.of(context).padding.top + 20,
+            right: 20,
+            child: TextButton(
+              onPressed: _goToWelcome,
+              child: const Text(
+                "Skip",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+
+          // Bottom Navigation Buttons
+          Positioned(
+            bottom: 50,
+            left: 20,
+            right: 20,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // Skip Button
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/acceuil');
-                    print("Skip Pressed");
-                  },
-                  child: Text("Skip", style: TextStyle(fontSize: 16)),
-                ),
+                // Prev Button
+                if (_currentPage > 0)
+                  TextButton(
+                    onPressed: _prevPage,
+                    child: const Text(
+                      "Prev",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                if (_currentPage == 0) const SizedBox(width: 60),
 
-                // Dots Indicator
+                // Progress Dots
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: List.generate(
-                    onboardingData.length,
-                    (index) => buildDot(index),
+                    _onboardingData.length,
+                    (index) => AnimatedContainer(
+                      duration: const Duration(milliseconds: 200),
+                      margin: const EdgeInsets.symmetric(horizontal: 4),
+                      width: _currentPage == index ? 24 : 8,
+                      height: 8,
+                      decoration: BoxDecoration(
+                        color: _currentPage == index ? Colors.blue : Colors.grey,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    ),
                   ),
                 ),
 
                 // Next Button
                 TextButton(
-                  onPressed: nextPage,
+                  onPressed: _currentPage == _onboardingData.length - 1 ? _goToWelcome : _nextPage,
                   child: Text(
-                    _currentPage == 2 ? "Finish" : "Next",
-                    style: TextStyle(fontSize: 16),
+                    _currentPage == _onboardingData.length - 1 ? "Get Started" : "Next",
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue,
+                    ),
                   ),
                 ),
               ],
@@ -105,58 +170,44 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       ),
     );
   }
-
-  Widget buildDot(int index) {
-    return Container(
-      margin: EdgeInsets.only(right: 5),
-      height: 8,
-      width: _currentPage == index ? 20 : 8,
-      decoration: BoxDecoration(
-        color: _currentPage == index ? Colors.blue : Colors.grey,
-        borderRadius: BorderRadius.circular(5),
-      ),
-    );
-  }
 }
 
 class OnboardingPage extends StatelessWidget {
-  final String image, title, description;
+  final String title;
+  final String description;
+  final String image;
 
-  OnboardingPage({required this.image, required this.title, required this.description});
+  const OnboardingPage({
+    super.key,
+    required this.title,
+    required this.description,
+    required this.image,
+  });
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
-      child: Column(
-        children: [
-          // Image in the top half of the screen
-          Container(
-            height: screenHeight / 2, // Height is half of the screen
-            child: Image.asset(image, fit: BoxFit.cover), // The image fills the container
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image.asset(image),
+        const SizedBox(height: 20),
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
           ),
-          SizedBox(height: 20),
-          // Title and description in the bottom half of the screen
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                title,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 10),
-              Text(
-                description,
-                style: TextStyle(fontSize: 14, color: Colors.grey),
-                textAlign: TextAlign.center,
-              ),
-            ],
+        ),
+        const SizedBox(height: 10),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 40),
+          child: Text(
+            description,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 16),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
