@@ -3,10 +3,12 @@ import 'package:pfe_frontend/pages/login.dart';
 import 'package:pfe_frontend/pages/signupscreen.dart'; // Correction du chemin de l'inscription
 
 class WelcomeScreen extends StatelessWidget {
+  const WelcomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFD5F3F9), // Couleur de fond
+      backgroundColor: const Color(0xFFD5F3F9), // Couleur de fond
       body: SafeArea(
         child: Center(
           child: Column(
@@ -18,23 +20,25 @@ class WelcomeScreen extends StatelessWidget {
                 height: 280,
                 fit: BoxFit.contain,
               ),
-              SizedBox(height: 50), // Espacement amélioré
+              const SizedBox(height: 50), // Espacement amélioré
               CustomButton(
                 text: 'Se Connecter', // Texte en français
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => LoginPage()),
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
                   );
                 },
               ),
-              SizedBox(height: 20), // Réduction de l'espacement entre les boutons
+              const SizedBox(
+                  height: 20), // Réduction de l'espacement entre les boutons
               CustomButton(
                 text: 'S’inscrire',
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => RegisterScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => const RegisterScreen()),
                   );
                 },
               ),
@@ -50,7 +54,7 @@ class CustomButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
 
-  CustomButton({required this.text, required this.onPressed});
+  const CustomButton({super.key, required this.text, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +68,7 @@ class CustomButton extends StatelessWidget {
             color: Colors.black.withOpacity(0.2), // Ombre améliorée
             blurRadius: 12,
             spreadRadius: 1,
-            offset: Offset(0, 6),
+            offset: const Offset(0, 6),
           ),
         ],
       ),
@@ -75,12 +79,12 @@ class CustomButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),
-          padding: EdgeInsets.symmetric(vertical: 16),
+          padding: const EdgeInsets.symmetric(vertical: 16),
         ),
         onPressed: onPressed,
         child: Text(
           text,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
             fontFamily: 'SF Pro', // Assure-toi que SF Pro est bien utilisé

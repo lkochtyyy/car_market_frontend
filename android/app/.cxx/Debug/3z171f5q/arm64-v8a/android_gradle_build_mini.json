@@ -1,0 +1,20 @@
+{
+  "buildFiles": [
+    "C:\\Users\\LENOVO\\Downloads\\flutter_windows_3.27.1-stable\\flutter\\packages\\flutter_tools\\gradle\\src\\main\\groovy\\CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "C:\\Users\\LENOVO\\AppData\\Local\\Android\\sdk\\cmake\\3.22.1\\bin\\ninja.exe",
+      "-C",
+      "C:\\Users\\LENOVO\\car_market_frontend\\car_market_frontend\\android\\app\\.cxx\\Debug\\3z171f5q\\arm64-v8a",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "C:\\Users\\LENOVO\\AppData\\Local\\Android\\sdk\\cmake\\3.22.1\\bin\\ninja.exe",
+    "-C",
+    "C:\\Users\\LENOVO\\car_market_frontend\\car_market_frontend\\android\\app\\.cxx\\Debug\\3z171f5q\\arm64-v8a",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {}
+}

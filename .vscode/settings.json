@@ -1,3 +1,4 @@
 {
-    "cmake.sourceDirectory": "C:/Users/LENOVO/pfe_frontend/linux"
+    "cmake.sourceDirectory": "C:/Users/LENOVO/pfe_frontend/linux",
+    "java.jdt.ls.java.home": "/path/to/your/jdk"
 }

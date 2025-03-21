@@ -5,6 +5,48 @@ void main() {
   runApp(const MyApp());
 }
 
+class OnboardingPage extends StatelessWidget {
+  final String title;
+  final String description;
+  final String image;
+
+  const OnboardingPage({
+    super.key,
+    required this.title,
+    required this.description,
+    required this.image,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image.asset(image, height: 300),
+        const SizedBox(height: 20),
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.blueAccent, // Change to a better color
+          ),
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: 10),
+        Text(
+          description,
+          style: const TextStyle(
+            fontSize: 16,
+            color: Colors.grey,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ],
+    );
+  }
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -15,6 +57,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         fontFamily: 'Roboto',
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: const OnboardingScreen(),
     );
@@ -35,17 +78,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final List<Map<String, String>> _onboardingData = [
     {
       "title": "Choose a car",
-      "description": "Explore and find the perfect car for you! Drawer detailed displays, compare results, and make informed decisions with ease.",
+      "description":
+          "Explore and find the perfect car for you! Drawer detailed displays, compare results, and make informed decisions with ease.",
       "image": "assets/image11.png",
     },
     {
       "title": "Contact seller",
-      "description": "Easily contact sellers to ask questions, negotiate prices, and finalize your car purchase. Get instant replies and make informed decisions before buying your next vehicle.",
+      "description":
+          "Easily contact sellers to ask questions, negotiate prices, and finalize your car purchase. Get instant replies and make informed decisions before buying your next vehicle.",
       "image": "assets/image22.png",
     },
     {
       "title": "Get Your Car",
-      "description": "Complete your purchase and drive away with your dream car. Secure transactions and a smooth process make buying easier than ever!",
+      "description":
+          "Complete your purchase and drive away with your dream car. Secure transactions and a smooth process make buying easier than ever!",
       "image": "assets/image33.png",
     },
   ];
@@ -71,13 +117,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   void _goToWelcome() {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => WelcomeScreen()),
+      MaterialPageRoute(builder: (context) => const WelcomeScreen()),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFD5F6FA), // Conserve la couleur de fond
+      // Applied background color
       body: Stack(
         children: [
           PageView.builder(
@@ -92,7 +140,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               );
             },
           ),
-
           // Skip Button
           Positioned(
             top: MediaQuery.of(context).padding.top + 20,
@@ -109,7 +156,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
             ),
           ),
-
           // Bottom Navigation Buttons
           Positioned(
             bottom: 50,
@@ -132,7 +178,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                   ),
                 if (_currentPage == 0) const SizedBox(width: 60),
-
                 // Progress Dots
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -144,18 +189,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       width: _currentPage == index ? 24 : 8,
                       height: 8,
                       decoration: BoxDecoration(
-                        color: _currentPage == index ? Colors.blue : Colors.grey,
+                        color:
+                            _currentPage == index ? Colors.blue : Colors.grey,
                         borderRadius: BorderRadius.circular(4),
                       ),
                     ),
                   ),
                 ),
-
                 // Next Button
                 TextButton(
-                  onPressed: _currentPage == _onboardingData.length - 1 ? _goToWelcome : _nextPage,
+                  onPressed: _currentPage == _onboardingData.length - 1
+                      ? _goToWelcome
+                      : _nextPage,
                   child: Text(
-                    _currentPage == _onboardingData.length - 1 ? "Get Started" : "Next",
+                    _currentPage == _onboardingData.length - 1
+                        ? "Get Started"
+                        : "Next",
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -168,46 +217,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           ),
         ],
       ),
-    );
-  }
-}
-
-class OnboardingPage extends StatelessWidget {
-  final String title;
-  final String description;
-  final String image;
-
-  const OnboardingPage({
-    super.key,
-    required this.title,
-    required this.description,
-    required this.image,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Image.asset(image),
-        const SizedBox(height: 20),
-        Text(
-          title,
-          style: const TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 10),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 40),
-          child: Text(
-            description,
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 16),
-          ),
-        ),
-      ],
     );
   }
 }

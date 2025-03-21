@@ -1,3 +1,15 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        // Ajouter ou mettre à jour la version de Kotlin
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.21"  // Assure-toi que c'est la bonne version
+        classpath 'com.android.tools.build:gradle:8.0.0'  // Assure-toi d'utiliser la version compatible avec ton projet
+    }
+}
+
 allprojects {
     repositories {
         google()
@@ -9,10 +21,40 @@ rootProject.buildDir = "../build"
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
+
 subprojects {
     project.evaluationDependsOn(":app")
 }
 
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
+}
+
+// Configuration Android
+android {
+    compileSdkVersion 33  // Assure-toi que cette version est correcte pour ton projet
+
+    defaultConfig {
+        applicationId "com.example.car_market_frontend"
+        minSdkVersion 21
+        targetSdkVersion 33
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17  // Configuration de Java 17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'  // Configurer Kotlin pour utiliser Java 17
+    }
 }
