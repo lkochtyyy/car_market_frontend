@@ -101,7 +101,7 @@ class _FeaturedCarsPageState extends State<FeaturedCarsPage> {
             Flexible(
               child: TextField(
                 decoration: InputDecoration(
-                  hintText: 'Rechercher...',
+                  hintText: 'Chercher...',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                   ),
@@ -178,8 +178,6 @@ class _FeaturedCarsPageState extends State<FeaturedCarsPage> {
           page = const SearchCarsPage();
         } else if (index == 4) {
           page = FavorisPage();
-        } else if (index == 2) {
-          page = const FeaturedCarsPage();
         } else if (index == 3) {
           page = const ChatsPage();
         } else {

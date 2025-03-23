@@ -163,7 +163,7 @@ class _SearchCarsPageState extends State<SearchCarsPage> {
     return Scaffold(
       backgroundColor: const Color(0xFFD5F6FA),
       appBar: AppBar(
-        title: const Text('Rechercher une voiture',
+        title: const Text('Chercher une voiture',
             style: TextStyle(color: Colors.black)),
         backgroundColor: const Color(0xFFD5F6FA),
         elevation: 0,
@@ -176,7 +176,7 @@ class _SearchCarsPageState extends State<SearchCarsPage> {
             TextField(
               controller: _searchController,
               decoration: const InputDecoration(
-                hintText: "Rechercher...",
+                hintText: "Chercher...",
                 prefixIcon: Icon(Icons.search),
                 filled: true,
                 fillColor: Colors.white,

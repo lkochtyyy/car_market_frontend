@@ -96,9 +96,6 @@ class FavorisPage extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => const SearchCarsPage()),
               );
               break;
-            case 4:
-              Navigator.pushNamed(context, '/favoris');
-              break;
             case 2:
               Navigator.push(
                 context,
