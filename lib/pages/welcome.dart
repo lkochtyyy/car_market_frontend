@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pfe_frontend/pages/login.dart';
-import 'package:pfe_frontend/pages/signupscreen.dart'; // Correction du chemin de l'inscription
+import 'package:pfe_frontend/pages/login.dart' as login_page;
+import 'package:pfe_frontend/pages/signupscreen.dart' as signup_page; // Correction du chemin de l'inscription
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -8,7 +8,8 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFD5F3F9), // Couleur de fond
+      backgroundColor:
+          const Color(0xFFD5F3F9), // Couleur de fond que vous avez choisie
       body: SafeArea(
         child: Center(
           child: Column(
@@ -16,29 +17,29 @@ class WelcomeScreen extends StatelessWidget {
             children: [
               Image.asset(
                 'assets/welcome.png', // Vérifie bien le chemin de l'image
-                width: 280, // Ajusté pour un meilleur rendu
-                height: 280,
+                width: 250, // Ajusté pour un meilleur rendu
+                height: 250,
                 fit: BoxFit.contain,
               ),
-              const SizedBox(height: 50), // Espacement amélioré
+              const SizedBox(height: 60), // Espacement amélioré
               CustomButton(
-                text: 'Se Connecter', // Texte en français
+                text: 'Se connecter', // Texte normalisé
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const LoginPage()),
+                    MaterialPageRoute(builder: (context) => const login_page.LoginPage()),
                   );
                 },
               ),
               const SizedBox(
                   height: 20), // Réduction de l'espacement entre les boutons
               CustomButton(
-                text: 'S’inscrire',
+                text: 'S’inscrire', // Texte normalisé
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const RegisterScreen()),
+                        builder: (context) => const signup_page.RegisterScreen()),
                   );
                 },
               ),
@@ -58,7 +59,9 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
       width: 220, // Légèrement plus large pour plus d'équilibre
       height: 55,
       decoration: BoxDecoration(
@@ -80,14 +83,17 @@ class CustomButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(30),
           ),
           padding: const EdgeInsets.symmetric(vertical: 16),
+          elevation: 5, // Légère élévation pour plus d'effet de profondeur
         ),
         onPressed: onPressed,
         child: Text(
           text,
           style: const TextStyle(
-            fontSize: 18,
+            fontSize: 16,
             fontWeight: FontWeight.w600,
-            fontFamily: 'SF Pro', // Assure-toi que SF Pro est bien utilisé
+            fontFamily:
+                'Roboto', // Choisir une police classique si SF Pro non disponible
+            letterSpacing: 1.2, // Espacement des lettres pour un effet moderne
           ),
         ),
       ),

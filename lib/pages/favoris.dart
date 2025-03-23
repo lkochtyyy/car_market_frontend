@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pfe_frontend/pages/messagerie.dart';
 import 'package:pfe_frontend/pages/pagedacceuil.dart';
 import 'package:pfe_frontend/pages/publier.dart';
+import 'package:pfe_frontend/pages/search.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
       home: FavorisPage(),
       routes: {
         '/publier': (context) => const PublierAnnoncePage(),
+        '/Chercher': (context) => const SearchCarsPage(),
         '/favoris': (context) => FavorisPage(),
         '/home': (context) => const FeaturedCarsPage(),
         '/messagerie': (context) => const ChatsPage(),
@@ -68,18 +70,17 @@ class FavorisPage extends StatelessWidget {
               icon: Icon(Icons.directions_car, color: Colors.black),
               label: 'Publier'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.favorite_outline, color: Colors.black),
-              label: 'Favoris'),
+              icon: Icon(Icons.search, color: Colors.black), label: 'Chercher'),
           BottomNavigationBarItem(
               icon: Icon(Icons.home, color: Colors.black), label: 'Home'),
           BottomNavigationBarItem(
               icon: Icon(FontAwesomeIcons.paperPlane, color: Colors.black),
               label: 'Messagerie'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.settings, color: Colors.black),
-              label: 'Paramètres'),
+              icon: Icon(Icons.favorite_border_outlined, color: Colors.black),
+              label: 'Favoris'),
         ],
-        currentIndex: 1, // L'index de 'Favoris' est sélectionné par défaut
+        currentIndex: 4, // L'index de 'Favoris' est sélectionné par défaut
         selectedItemColor: Colors.cyan,
         unselectedItemColor: Colors.black,
         showUnselectedLabels: true,
@@ -90,6 +91,12 @@ class FavorisPage extends StatelessWidget {
               Navigator.pushNamed(context, '/publier');
               break;
             case 1:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SearchCarsPage()),
+              );
+              break;
+            case 4:
               Navigator.pushNamed(context, '/favoris');
               break;
             case 2:

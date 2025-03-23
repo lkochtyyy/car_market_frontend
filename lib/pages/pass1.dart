@@ -26,20 +26,18 @@ class OnboardingPage extends StatelessWidget {
         const SizedBox(height: 20),
         Text(
           title,
-          style: const TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Colors.blueAccent, // Change to a better color
-          ),
+          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: Colors.blueAccent, // Can adjust for a better contrast
+              ),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 10),
         Text(
           description,
-          style: const TextStyle(
-            fontSize: 16,
-            color: Colors.grey,
-          ),
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: Colors.grey,
+              ),
           textAlign: TextAlign.center,
         ),
       ],
@@ -58,6 +56,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: 'Roboto',
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        textTheme: const TextTheme(
+          headlineSmall: TextStyle(fontSize: 24),
+          bodyMedium: TextStyle(fontSize: 16),
+        ),
       ),
       home: const OnboardingScreen(),
     );
@@ -75,23 +77,24 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
+  // Onboarding data in a structured format
   final List<Map<String, String>> _onboardingData = [
     {
-      "title": "Choose a car",
+      "title": "Choisissez une voiture",
       "description":
-          "Explore and find the perfect car for you! Drawer detailed displays, compare results, and make informed decisions with ease.",
+          " Explorez et trouvez la voiture parfaite pour vous ! Dessinez des affichages détaillés, comparez les résultats et prenez des décisions éclairées en toute simplicité.",
       "image": "assets/image11.png",
     },
     {
-      "title": "Contact seller",
+      "title": "Contacter le vendeur",
       "description":
-          "Easily contact sellers to ask questions, negotiate prices, and finalize your car purchase. Get instant replies and make informed decisions before buying your next vehicle.",
+          "Contactez facilement les vendeurs pour poser des questions, négocier les prix et finaliser votre achat de voiture. Obtenez des réponses instantanées et prenez des décisions éclairées avant d’acheter votre prochain véhicule.",
       "image": "assets/image22.png",
     },
     {
-      "title": "Get Your Car",
+      "title": "Obtenez votre voiture",
       "description":
-          "Complete your purchase and drive away with your dream car. Secure transactions and a smooth process make buying easier than ever!",
+          "Finalisez votre achat et repartez avec la voiture de vos rêves. Des transactions sécurisées et un processus fluide rendent l’achat plus facile que jamais !",
       "image": "assets/image33.png",
     },
   ];
@@ -124,10 +127,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFD5F6FA), // Conserve la couleur de fond
-      // Applied background color
+      backgroundColor: const Color(0xFFD5F6FA),
       body: Stack(
         children: [
+          // PageView for onboarding slides
           PageView.builder(
             controller: _pageController,
             itemCount: _onboardingData.length,
@@ -140,6 +143,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               );
             },
           ),
+
           // Skip Button
           Positioned(
             top: MediaQuery.of(context).padding.top + 20,
@@ -147,7 +151,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: TextButton(
               onPressed: _goToWelcome,
               child: const Text(
-                "Skip",
+                "Passer",
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 16,
@@ -156,7 +160,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
             ),
           ),
-          // Bottom Navigation Buttons
+
+          // Bottom Navigation Buttons (Prev, Progress, Next)
           Positioned(
             bottom: 50,
             left: 20,
@@ -169,7 +174,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   TextButton(
                     onPressed: _prevPage,
                     child: const Text(
-                      "Prev",
+                      "Précédent",
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -178,6 +183,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                   ),
                 if (_currentPage == 0) const SizedBox(width: 60),
+
                 // Progress Dots
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -196,6 +202,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                   ),
                 ),
+
                 // Next Button
                 TextButton(
                   onPressed: _currentPage == _onboardingData.length - 1
@@ -203,8 +210,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       : _nextPage,
                   child: Text(
                     _currentPage == _onboardingData.length - 1
-                        ? "Get Started"
-                        : "Next",
+                        ? "Démarrer"
+                        : "Suivant",
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,

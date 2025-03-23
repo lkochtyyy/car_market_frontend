@@ -6,7 +6,7 @@ import 'package:pfe_frontend/pages/profile.dart';
 import 'package:pfe_frontend/pages/publier.dart';
 import 'package:pfe_frontend/pages/resetpassword.dart';
 import 'pages/welcome.dart';
-import 'pages/signupscreen.dart';
+import 'pages/signupscreen.dart' hide LoginPage;
 import 'pages/forgetpassword.dart';
 import 'pages/pass1.dart';
 import 'pages/login.dart';

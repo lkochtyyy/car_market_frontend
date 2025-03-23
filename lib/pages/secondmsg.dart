@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:pfe_frontend/pages/messagerie.dart';
 
 void main() {
-  runApp(const ChatApp());
+  runApp(const ChatApp2());
 }
 
-class ChatApp extends StatelessWidget {
-  const ChatApp({super.key});
+class ChatApp2 extends StatelessWidget {
+  const ChatApp2({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +58,7 @@ class _ChatScreenState extends State<ChatScreen> {
           onPressed: () {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) =>  const ChatsPage()),
+              MaterialPageRoute(builder: (context) => const ChatsPage()),
             );
           },
         ),
@@ -69,7 +69,7 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
             SizedBox(width: 10),
             Text(
-              "Mohamed Ali",
+              "Hechem",
               style:
                   TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
             ),

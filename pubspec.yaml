@@ -15,7 +15,7 @@ dependencies:
   smooth_page_indicator: ^1.1.0
   lucide_icons: 0.257.0
   image_picker: ^1.0.4
-  ikchatbot: ^1.0.5
+  page_transition: ^2.0.9
 
 dev_dependencies:
   flutter_test:

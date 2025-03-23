@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:pfe_frontend/pages/favoris.dart';
-import 'package:pfe_frontend/pages/pagedacceuil.dart';
-import 'package:pfe_frontend/pages/publier.dart';
 import 'package:pfe_frontend/pages/firstmsg.dart';
 
 class ChatsPage extends StatelessWidget {
@@ -29,13 +25,11 @@ class ChatsPage extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            // Search Bar
             _buildSearchBar(),
             const SizedBox(height: 10),
-            // List of Chats (only one contact)
             Expanded(
               child: ListView.builder(
-                itemCount: 1, // Only one contact
+                itemCount: 1,
                 itemBuilder: (context, index) {
                   return _buildChatItem(context, index);
                 },
@@ -45,15 +39,18 @@ class ChatsPage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const AddContactPage()),
+          );
+        },
         backgroundColor: Colors.pinkAccent,
         child: const Icon(Icons.add, color: Colors.white),
       ),
-      bottomNavigationBar: _buildBottomNavigationBar(context),
     );
   }
 
-  // Reusable Search Bar
   Widget _buildSearchBar() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -63,7 +60,7 @@ class ChatsPage extends StatelessWidget {
       ),
       child: const TextField(
         decoration: InputDecoration(
-          hintText: 'Search',
+          hintText: 'Chercher',
           prefixIcon: Icon(Icons.search),
           border: InputBorder.none,
         ),
@@ -71,88 +68,159 @@ class ChatsPage extends StatelessWidget {
     );
   }
 
-  // Reusable Chat Item (Only "Mohamed Ali")
   Widget _buildChatItem(BuildContext context, int index) {
-    return ListTile(
-      leading: CircleAvatar(
-        backgroundColor: Colors.grey.shade300,
-        child: const Icon(Icons.person, color: Colors.white),
-      ),
-      title: const Text('Mohamed Ali',
-          style: TextStyle(fontWeight: FontWeight.bold)),
-      subtitle: const Text('Last message preview...'),
-      trailing: null, // No trailing number for this contact
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const ChatApp()),
-        );
-      },
-    );
-  }
-
-  // Reusable Bottom Navigation Bar
-  Widget _buildBottomNavigationBar(BuildContext context) {
-    return BottomNavigationBar(
-      items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.directions_car, color: Colors.black),
-          label: 'Publier',
+    return Column(
+      children: [
+        ListTile(
+          leading: CircleAvatar(
+            backgroundColor: Colors.grey.shade300,
+            child: const Icon(Icons.person, color: Colors.white),
+          ),
+          title: const Text('Mohamed Ali',
+              style: TextStyle(fontWeight: FontWeight.bold)),
+          subtitle: const Text('Last message preview...'),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ChatApp()),
+            );
+          },
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.favorite_outline, color: Colors.black),
-          label: 'Favoris',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home, color: Colors.black),
-          label: 'Home',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(FontAwesomeIcons.paperPlane, color: Colors.black),
-          label: 'Messagerie',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.settings, color: Colors.black),
-          label: 'Paramètres',
+        const Divider(thickness: 0.5, indent: 16, endIndent: 16),
+        ListTile(
+          leading: CircleAvatar(
+            backgroundColor: Colors.grey.shade300,
+            child: const Icon(Icons.person, color: Colors.white),
+          ),
+          title: const Text('Hechem',
+              style: TextStyle(fontWeight: FontWeight.bold)),
+          subtitle: const Text('Last message preview...'),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ChatApp()),
+            );
+          },
         ),
       ],
-      currentIndex: 3,
-      selectedItemColor: Colors.cyan,
-      unselectedItemColor: Colors.black,
-      showUnselectedLabels: true,
-      onTap: (index) {
-        _onBottomNavTapped(index, context);
-      },
     );
   }
+}
 
-  // Bottom Navigation Bar Action
-  void _onBottomNavTapped(int index, BuildContext context) {
-    switch (index) {
-      case 0:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const PublierAnnoncePage()),
-        );
-        break;
-      case 1:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => FavorisPage()),
-        );
-        break;
-      case 2:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const FeaturedCarsPage()),
-        );
-        break;
-      case 3:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const ChatsPage()),
-        );
-        break;
+class AddContactPage extends StatefulWidget {
+  const AddContactPage({super.key});
+
+  @override
+  _AddContactPageState createState() => _AddContactPageState();
+}
+
+class _AddContactPageState extends State<AddContactPage> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  List<Map<String, String>> contacts = []; // Liste des contacts
+  String message = '';
+
+  void _addContact() {
+    if (_nameController.text.isNotEmpty && _phoneController.text.isNotEmpty) {
+      setState(() {
+        // Ajouter un nouveau contact à la liste
+        contacts.add({
+          'name': _nameController.text,
+          'phone': _phoneController.text,
+        });
+        message = 'Contact ajouté avec succès !';
+      });
+
+      // Réinitialiser les champs de texte
+      _nameController.clear();
+      _phoneController.clear();
+    } else {
+      setState(() {
+        message = 'Veuillez remplir tous les champs.';
+      });
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFFD5F6FA),
+      appBar: AppBar(
+        title: const Text('Ajouter un Contact', textAlign: TextAlign.center),
+        centerTitle: true,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            TextField(
+              controller: _nameController,
+              decoration: InputDecoration(
+                labelText: 'Nom',
+                prefixIcon: const Icon(Icons.person),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            TextField(
+              controller: _phoneController,
+              keyboardType: TextInputType.phone,
+              decoration: InputDecoration(
+                labelText: 'Numéro de téléphone',
+                prefixIcon: const Icon(Icons.phone),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _addContact,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 0, 5, 13),
+                padding: const EdgeInsets.symmetric(vertical: 14),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              child: const Text(
+                'Ajouter',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              message,
+              style: TextStyle(
+                color: message == 'Contact ajouté avec succès !'
+                    ? Colors.green
+                    : Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 20),
+            // Liste des contacts ajoutés
+            Expanded(
+              child: ListView.builder(
+                itemCount: contacts.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(contacts[index]['name']!),
+                    subtitle: Text(contacts[index]['phone']!),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
